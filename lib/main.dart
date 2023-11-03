@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterpersonal/view/home_page.dart';
 import 'package:get/get.dart';
 
 void main(){
-  runApp(Home());
+  runApp(ProviderScope(child: Home()));
 }
 
 class Home extends StatelessWidget {
