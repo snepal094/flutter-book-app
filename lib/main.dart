@@ -6,7 +6,9 @@ import 'package:flutterpersonal/view/home_page.dart';
 import 'package:get/get.dart';
 
 
+Future getData() async{
 
+}
 
 
 void main (){
