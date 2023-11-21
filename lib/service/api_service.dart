@@ -1,37 +1,21 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutterpersonal/models/movie.dart';
+import 'package:flutterpersonal/constants/api.dart';
+import 'package:flutterpersonal/shared/client_provider.dart';
 
 
-
-
+final apiService= Provider((ref) => ApiService(ref.watch(clientProvider)));
 
 class ApiService {
 
-  static final dio = Dio(
-    //     BaseOptions(
-    //   baseUrl: 'https://www.themealdb.com/api/json/v1/1'
-    // )
-  );
+final Dio dio;
+ApiService(this.dio);
 
-  static Future  getMealData () async{
+  Future<List<Movie>> getMealData () async{
     try{
-      final response = await dio.post('https://translate-plus.p.rapidapi.com/translate',
-          queryParameters: {
-
-          },
-          data: {
-            'text': 'Hello , How are you',
-            'source': 'en',
-            'target': 'ne'
-          },
-          options: Options(
-              headers:  {
-                'content-type': 'application/json',
-                'X-RapidAPI-Key': '89e53c72d7msh16aa8c041814a4cp1f3e79jsn333d7bcaf747',
-                'X-RapidAPI-Host': 'translate-plus.p.rapidapi.com'
-              }
-          ));
-      print(response);
-      return response.data;
+      final response= await dio.get(Api.getPopular);
+      return (response.data['results'] as List).map((e) => Movie.fromJson(e)).toList();
     }on DioException catch (err){
       print(err);
       throw '${err.message}';
